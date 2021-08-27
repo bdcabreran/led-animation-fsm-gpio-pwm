@@ -184,7 +184,7 @@ static void during_action_exec_proc(led_animation_fsm_t *handle)
         |---Ton---|
 
         ____|||||||||||________|||||||||||________
-            -bright---- PWM (1ms update max)   
+            -bright---- PWM (2ms max freq = 500Hz)   
     */
     
     if(time_event_is_raised(&handle->event.time.bright_refresh) == true)

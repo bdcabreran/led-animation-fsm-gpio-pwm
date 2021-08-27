@@ -75,16 +75,16 @@ int main(void)
   host_comm_rx_fsm_init(&host_comm_rx_handle);
 
   /* example */
-  led_animation_init(&led_animation, &led2);
-  led_animation_start(&led_animation, &breath);
+  // led_animation_init(&led_animation, &led2);
+  // led_animation_start(&led_animation, &breath);
 
   /* Infinite loop */
   while (1)
   {
     host_comm_tx_fsm_run(&host_comm_tx_handle);
     host_comm_rx_fsm_run(&host_comm_rx_handle);
-    led_animation_run(&led_animation);
-    led_animation_breath();
+    // led_animation_run(&led_animation);
+    // led_animation_breath();
   }
 }
 

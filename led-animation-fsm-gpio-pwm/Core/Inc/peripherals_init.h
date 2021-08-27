@@ -19,6 +19,7 @@
 #define SWO_Pin GPIO_PIN_3
 #define SWO_GPIO_Port GPIOB
 
+extern TIM_HandleTypeDef htim2;
 
 /* Public function prototypes -----------------------------------------------*/
 void peripherals_init(void);
