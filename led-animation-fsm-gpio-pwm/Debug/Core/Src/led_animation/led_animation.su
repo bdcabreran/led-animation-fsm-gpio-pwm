@@ -1,0 +1,15 @@
+led_animation.c:37:13:led_animation_set_next_state	16	static
+led_animation.c:44:13:enter_seq_idle_proc	16	static
+led_animation.c:52:13:enter_seq_exec_proc	16	static
+led_animation.c:59:13:entry_action_exec_proc	16	static
+led_animation.c:71:6:led_animation_init	16	static
+led_animation.c:87:9:led_animation_start	16	static
+led_animation.c:98:9:led_set_brightness	16	static
+led_animation.c:105:6:led_animation_stop	16	static
+led_animation.c:112:13:idle_proc_on_react	24	static
+led_animation.c:129:13:exit_action_exec_proc	16	static
+led_animation.c:143:13:during_action_exec_proc	16	static
+led_animation.c:164:13:exec_proc_on_react	24	static
+led_animation.c:209:6:led_animation_run	16	static
+led_animation.c:220:6:led_animation_time_update	24	static
+led_animation.c:230:6:is_led_animation_ongoing	16	static

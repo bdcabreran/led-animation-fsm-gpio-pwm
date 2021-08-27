@@ -1,0 +1,11 @@
+uart_driver.c:59:13:MX_USART2_UART_Init	8	static
+uart_driver.c:82:9:uart_init	8	static
+uart_driver.c:99:9:uart_get_rx_data_len	8	static
+uart_driver.c:105:9:uart_read_rx_data	16	static
+uart_driver.c:111:9:uart_fetch_rx_data	16	static
+uart_driver.c:117:9:uart_clear_rx_data	8	static
+uart_driver.c:123:9:uart_transmit	16	static
+uart_driver.c:128:9:uart_transmit_it	24	static
+uart_driver.c:151:6:HAL_UART_TxCpltCallback	24	static
+uart_driver.c:170:6:HAL_UART_RxCpltCallback	16	static
+uart_driver.c:186:9:uart_write_rx_data	24	static

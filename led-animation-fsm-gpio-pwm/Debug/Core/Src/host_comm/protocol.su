@@ -1,0 +1,3 @@
+protocol.c:6:6:print_buff_hex	24	static
+protocol.c:16:6:print_buff_ascii	24	static
+protocol.c:36:9:protocol_check_valid_header	16	static

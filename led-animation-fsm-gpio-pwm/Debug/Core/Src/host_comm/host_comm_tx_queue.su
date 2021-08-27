@@ -1,0 +1,5 @@
+host_comm_tx_queue.c:38:6:host_comm_tx_queue_init	8	static
+host_comm_tx_queue.c:44:8:host_comm_tx_queue_get_pending_transfers	4	static
+host_comm_tx_queue.c:49:9:host_comm_tx_queue_write_request	24	static
+host_comm_tx_queue.c:74:9:host_comm_tx_queue_read_request	16	static
+host_comm_tx_queue.c:93:9:host_comm_tx_queue_fetch_request	16	static

@@ -1,0 +1,4 @@
+core_cm4.h:2064:26:ITM_SendChar	16	static,ignoring_inline_asm
+itm_debug.c:17:6:ITM_enable	4	static
+itm_debug.c:26:6:ITM_send_char	16	static
+itm_debug.c:35:5:_write	32	static

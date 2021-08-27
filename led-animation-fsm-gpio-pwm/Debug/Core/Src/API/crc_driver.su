@@ -1,0 +1,2 @@
+crc_driver.c:13:13:MX_CRC_Init	8	static
+crc_driver.c:22:6:crc_calculate	16	static

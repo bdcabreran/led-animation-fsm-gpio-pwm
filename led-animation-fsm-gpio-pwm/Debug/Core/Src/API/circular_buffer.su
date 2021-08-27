@@ -1,0 +1,15 @@
+circular_buffer.c:36:13:head_ptr_advance	16	static
+circular_buffer.c:55:13:tail_ptr_retreat	16	static
+circular_buffer.c:76:9:circular_buff_empty	16	static
+circular_buffer.c:89:9:circular_buff_full	16	static
+circular_buffer.c:103:17:circular_buff_init	24	static
+circular_buffer.c:124:6:circular_buff_free	16	static
+circular_buffer.c:135:6:circular_buff_reset	16	static
+circular_buffer.c:149:8:circular_buff_get_data_len	24	static
+circular_buffer.c:176:8:circular_buff_capacity	16	static
+circular_buffer.c:188:8:circular_buff_get_free_space	24	static
+circular_buffer.c:200:6:circular_buff_put	16	static
+circular_buffer.c:216:9:circular_buff_get	24	static
+circular_buffer.c:241:20:circular_buff_write	32	static
+circular_buffer.c:275:9:circular_buff_read	32	static
+circular_buffer.c:300:9:circular_buff_fetch	32	static
