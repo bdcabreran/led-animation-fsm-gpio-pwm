@@ -12,17 +12,10 @@
 #include <stdint.h> 
 #include <stdbool.h>
 #include <string.h>
-
+#include "led_pwm.h"
 
 #define LED_ENDLESS_EXEC_TIME       (0xFFFFFFFF)
-#define LED_BRIGHT_REFRESH_RATE     (25)                        // time in milliseconds 
-#define LED_MAX_BRIGHTNESS          (LED_BRIGHT_REFRESH_RATE)   // [0 to LED_BRIGHT_REFRESH_RATE]
-
-typedef struct
-{
-    GPIO_TypeDef* port;
-    uint16_t pin;
-}led_pin_port;
+#define LED_MAX_BRIGHTNESS          (100)   
 
 typedef struct
 {
@@ -55,11 +48,7 @@ typedef struct
     time_event_t exec_time_expired;
     time_event_t time_on_expired;
     time_event_t period_expired;
-
-    /*reserved used for bright settings*/
-    time_event_t bright_amount;          // brightness
-    time_event_t bright_refresh;         // refresh rate
-
+    
 }led_animation_event_time_t;
 
 typedef struct
@@ -73,7 +62,7 @@ typedef struct
 typedef struct
 {
     led_animation_t animation;
-    led_pin_port    gpio;
+    led_pwm_t       led;
 }led_animation_iface_t;
 
 typedef struct
@@ -85,7 +74,7 @@ typedef struct
 
 extern led_animation_fsm_t led_animation;
 
-void led_animation_init(led_animation_fsm_t *handle, led_pin_port *gpio);
+void led_animation_init(led_animation_fsm_t *handle, led_pwm_t *led);
 uint8_t led_animation_start(led_animation_fsm_t *handle, led_animation_t *animation);
 uint8_t led_set_brightness(led_animation_fsm_t *handle, uint8_t brightness);
 void led_animation_run(led_animation_fsm_t *handle);

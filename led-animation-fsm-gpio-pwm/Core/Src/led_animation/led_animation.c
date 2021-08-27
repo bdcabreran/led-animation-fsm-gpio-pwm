@@ -46,7 +46,7 @@ static void enter_seq_idle_proc(led_animation_fsm_t *handle)
     led_animation_dbg("enter seq \t[ idle proc ]\n");
     led_animation_set_next_state(handle, st_led_animation_idle);
     /*start led off*/
-    HAL_GPIO_WritePin(handle->iface.gpio.port, handle->iface.gpio.pin, GPIO_PIN_RESET);
+    led_pwm_off(&handle->iface.led);
 }
 
 static void enter_seq_exec_proc(led_animation_fsm_t *handle)
@@ -65,19 +65,14 @@ static void entry_action_exec_proc(led_animation_fsm_t *handle)
     time_event_start(&handle->event.time.time_on_expired, handle->iface.animation.time_on);
     
     /*start led on*/
-    HAL_GPIO_WritePin(handle->iface.gpio.port, handle->iface.gpio.pin, GPIO_PIN_SET);
-
-    /*bright timers*/
-    time_event_start(&handle->event.time.bright_refresh, LED_BRIGHT_REFRESH_RATE);
-    time_event_start(&handle->event.time.bright_amount, handle->iface.animation.brightness);
-
+    led_pwm_on(&handle->iface.led);
 }
 
-void led_animation_init(led_animation_fsm_t *handle, led_pin_port *gpio)
+void led_animation_init(led_animation_fsm_t *handle, led_pwm_t *led)
 {
     /*init mcu gpio .. */
-    handle->iface.gpio.pin = gpio->pin;
-    handle->iface.gpio.port = gpio->port;
+    handle->iface.led.ch = led->ch;
+    handle->iface.led.tim = led->tim;
 
     /*enter idle state */
     enter_seq_idle_proc(handle);
@@ -102,14 +97,9 @@ uint8_t led_animation_start(led_animation_fsm_t *handle, led_animation_t *animat
 
 uint8_t led_set_brightness(led_animation_fsm_t *handle, uint8_t brightness)
 {
-    if(brightness <= LED_MAX_BRIGHTNESS)
-    {
-        //led_animation_dbg("func \t[ update brightness ]\n");
-        handle->iface.animation.brightness = brightness;
-        return 1;
-    }
+//    led_animation_dbg("func \t[ set brightness -> [%d] ]\n", brightness);
 
-    return 0;
+    return led_pwm_set_brightness(&handle->iface.led, brightness);
 }
 
 void led_animation_stop(led_animation_fsm_t *handle)
@@ -145,19 +135,11 @@ static void exit_action_exec_proc(led_animation_fsm_t *handle)
     time_event_stop(&handle->event.time.period_expired);
     time_event_stop(&handle->event.time.time_on_expired);
 
-    /*bright timers*/
-    time_event_stop(&handle->event.time.bright_refresh);
-    time_event_stop(&handle->event.time.bright_amount);
-
     /*start led off*/
-    HAL_GPIO_WritePin(handle->iface.gpio.port, handle->iface.gpio.pin, GPIO_PIN_RESET);
+    led_pwm_off(&handle->iface.led);
 }
 
-/** Update Brightness 
-@note : this function simulates a PWM signal from 0-LED_BRIGHT_REFRESH_RATE ms.
-PWM frec = 1/LED_BRIGHT_REFRESH_RATE = 1/25e-3 = 40Hz 
-brightness level can be chosen from 0 to LED_BRIGHT_REFRESH_RATE levels.
-*/
+
 static void during_action_exec_proc(led_animation_fsm_t *handle)
 {
     /*Update Period/Time on ms 
@@ -168,34 +150,14 @@ static void during_action_exec_proc(led_animation_fsm_t *handle)
     */
     if(time_event_is_raised(&handle->event.time.period_expired) == true)
     {
-        HAL_GPIO_WritePin(handle->iface.gpio.port, handle->iface.gpio.pin, GPIO_PIN_SET);
+        led_pwm_on(&handle->iface.led);
         time_event_start(&handle->event.time.time_on_expired, handle->iface.animation.time_on);
         time_event_start(&handle->event.time.period_expired, handle->iface.animation.period);
     }
 
     else if(time_event_is_raised(&handle->event.time.time_on_expired) == true)
     {
-        HAL_GPIO_WritePin(handle->iface.gpio.port, handle->iface.gpio.pin, GPIO_PIN_RESET);
-    }
-
-    /*Update Brightness 
-        ____|▔▔▔▔▔|________|▔▔▔▔▔|________
-        |------- T --------|
-        |---Ton---|
-
-        ____|||||||||||________|||||||||||________
-            -bright---- PWM (2ms max freq = 500Hz)   
-    */
-    
-    if(time_event_is_raised(&handle->event.time.bright_refresh) == true)
-    {
-        HAL_GPIO_WritePin(handle->iface.gpio.port, handle->iface.gpio.pin, GPIO_PIN_SET);
-        time_event_start(&handle->event.time.bright_refresh, LED_BRIGHT_REFRESH_RATE);
-        time_event_start(&handle->event.time.bright_amount, handle->iface.animation.brightness);
-    }
-    else if(time_event_is_raised(&handle->event.time.bright_amount) == true)
-    {
-        HAL_GPIO_WritePin(handle->iface.gpio.port, handle->iface.gpio.pin, GPIO_PIN_RESET);
+        led_pwm_off(&handle->iface.led);
     }
 }
 

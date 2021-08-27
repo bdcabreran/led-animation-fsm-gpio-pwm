@@ -13,6 +13,7 @@
 #include "stdio.h"
 #include "tdd.h" 
 #include "uart_driver.h"
+#include "led_pwm.h"
 
 #define HEARTBEAT_PERIOD_MS (200)
 void heartbeat_handler(void);
@@ -29,15 +30,15 @@ void print_startup_message(void)
 }
 
 /*example */
-led_pin_port led2 =
+led_pwm_t led2 =
     {
-        .pin = LD2_Pin,
-        .port = LD2_GPIO_Port};
+        .ch = TIM_CHANNEL_1,
+        .tim = &htim2};
 
 led_animation_t breath =
     {
         .brightness = 0,
-        .execution_time = 30000,
+        .execution_time = LED_ENDLESS_EXEC_TIME,
         .period = 100,
         .time_on = 100};
 
@@ -50,12 +51,12 @@ void led_animation_breath(void)
 
     //-------- Update every 30ms ---------//
     static int fade_amount = 1;
-    breath.brightness = (breath.brightness + fade_amount) % LED_MAX_BRIGHTNESS;
+    breath.brightness = (breath.brightness + fade_amount) % (LED_MAX_BRIGHTNESS);
 
-    if (breath.brightness >= (LED_MAX_BRIGHTNESS-1) || breath.brightness <= 0)
-      fade_amount = ~fade_amount;
+    if (breath.brightness >= (LED_MAX_BRIGHTNESS-1) || (breath.brightness <= 0))
+      fade_amount *= -1;
 
-    led_set_brightness(&led_animation, breath.brightness);
+	led_set_brightness(&led_animation, breath.brightness);
   }
 }
 
@@ -75,16 +76,16 @@ int main(void)
   host_comm_rx_fsm_init(&host_comm_rx_handle);
 
   /* example */
-  // led_animation_init(&led_animation, &led2);
-  // led_animation_start(&led_animation, &breath);
+  led_animation_init(&led_animation, &led2);
+  led_animation_start(&led_animation, &breath);
 
   /* Infinite loop */
   while (1)
   {
     host_comm_tx_fsm_run(&host_comm_tx_handle);
     host_comm_rx_fsm_run(&host_comm_rx_handle);
-    // led_animation_run(&led_animation);
-    // led_animation_breath();
+    led_animation_run(&led_animation);
+    led_animation_breath();
   }
 }
 

@@ -1,0 +1,4 @@
+led_pwm.c:8:6:led_pwm_init	48	static
+led_pwm.c:53:9:led_pwm_set_brightness	16	static
+led_pwm.c:63:6:led_pwm_on	16	static
+led_pwm.c:68:6:led_pwm_off	16	static
