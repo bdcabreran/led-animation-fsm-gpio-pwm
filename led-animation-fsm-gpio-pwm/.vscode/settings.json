@@ -1,0 +1,17 @@
+{
+    "files.associations": {
+        "init_peripherals.h": "c",
+        "main.h": "c",
+        "stm32f4xx_hal.h": "c",
+        "stm32f4xx_hal_conf.h": "c",
+        "circular_buffer.h": "c",
+        "stm32f4xx.h": "c",
+        "comm_driver.h": "c",
+        "stdbool.h": "c",
+        "host_comm_tx_queue.h": "c",
+        "uart_driver.h": "c",
+        "host_comm_tx_fsm.h": "c",
+        "peripherals_init.h": "c",
+        "host_comm_rx_fsm.h": "c"
+    }
+}

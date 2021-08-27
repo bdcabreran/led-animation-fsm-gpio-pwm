@@ -1,0 +1,7 @@
+time_event.c:15:6:time_event_start	16	static
+time_event.c:23:6:time_event_stop	16	static
+time_event.c:32:6:time_event_is_active	16	static
+time_event.c:38:6:time_event_update	16	static
+time_event.c:51:6:time_event_is_raised	16	static
+time_event.c:57:6:time_event_set_update_flag	16	static
+time_event.c:62:6:time_event_get_update_flag	4	static

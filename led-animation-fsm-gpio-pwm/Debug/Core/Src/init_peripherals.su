@@ -1,0 +1,3 @@
+init_peripherals.c:12:6:SystemClock_Config	88	static
+init_peripherals.c:59:13:MX_GPIO_Init	48	static
+init_peripherals.c:91:6:peripherals_init	8	static
