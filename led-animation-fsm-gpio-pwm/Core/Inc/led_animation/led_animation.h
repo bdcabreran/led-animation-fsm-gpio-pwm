@@ -27,12 +27,19 @@ typedef struct
 
 typedef enum
 {
-    ev_led_animation_invalid = 0x00,
-    ev_led_animation_start,
-    ev_led_animation_stop,
-    ev_led_animation_completed,
-    ev_led_animation_last
-}led_animation_event_name_t;
+    ev_ext_led_animation_invalid = 0x00,
+    ev_ext_led_animation_start,
+    ev_ext_led_animation_stop,
+    ev_ext_led_animation_last
+}led_animation_ev_ext_name_t;
+
+
+typedef enum
+{
+    ev_int_led_animation_invalid = 0x00,
+    ev_int_led_animation_completed,
+    ev_int_led_animation_last
+}led_animation_ev_int_name_t;
 
 typedef enum
 {
@@ -40,7 +47,6 @@ typedef enum
     st_led_animation_idle,
     st_led_animation_exec,
     st_led_animation_last
-
 }led_animation_state_t;
 
 typedef struct
@@ -49,13 +55,13 @@ typedef struct
     time_event_t time_on_expired;
     time_event_t period_expired;
     
-}led_animation_event_time_t;
+}led_animation_ev_time_t;
 
 typedef struct
 {
-    led_animation_event_name_t name;
-    led_animation_event_time_t time;
-
+    led_animation_ev_int_name_t internal;
+    led_animation_ev_ext_name_t external;
+    led_animation_ev_time_t     time;
 }led_animation_event_t;
 
 
@@ -70,6 +76,7 @@ typedef struct
     led_animation_event_t event;
     led_animation_state_t state;
     led_animation_iface_t iface;
+
 }led_animation_fsm_t;
 
 extern led_animation_fsm_t led_animation;
